@@ -57,4 +57,12 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
   }
+
+  public DriveTrain getDrive() {
+    return driveTrain;
+  }
+
+  public XboxController getController() {
+    return controller;
+  }
 }

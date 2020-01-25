@@ -8,8 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ArcadeDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -89,6 +91,11 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    Command driveCommand = new ArcadeDrive(
+      m_robotContainer.getDrive(), 
+      () -> {return 0;}, 
+      () -> {return 0;}
+    );
   }
 
   /**

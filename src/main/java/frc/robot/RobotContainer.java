@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+//SEE https://github.com/wpilibsuite/allwpilib/blob/master/wpilibjExamples/src/main/java/edu/wpi/first/wpilibj/examples/hatchbottraditional/RobotContainer.java FOR REF
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -14,6 +16,8 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
+import frc.robot.commands.ArcadeDrive;
+
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -21,14 +25,15 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // Robot Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DriveTrain driveTrain = new DriveTrain();
-  private final XboxController controller = new XboxController(0);
+  private final DriveTrain m_robotDrive = new DriveTrain();
 
+  // Robot Commands
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-
+  //Robot Controller
+  private final XboxController m_driverController = new XboxController(0);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -36,6 +41,18 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    // Configure default commands
+    // Set default drive command --> arcade drive
+    m_robotDrive.setDefaultCommand(
+      
+      //Arcade Drive
+      new ArcadeDrive(
+        m_robotDrive, 
+        () -> m_driverController.getY(GenericHID.Hand.kLeft),
+        () -> m_driverController.getX(GenericHID.Hand.kRight)
+      )
+    );
   }
 
   /**
@@ -45,6 +62,18 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    //PUT JOYSTICK BUTTON --> COMMAND HERE
+    // Grab the hatch when the 'A' button is pressed.
+    /*
+    new JoystickButton(m_driverController, Button.kA.value)
+        .whenPressed(new GrabHatch(m_hatchSubsystem));
+    // Release the hatch when the 'B' button is pressed.
+    new JoystickButton(m_driverController, Button.kB.value)
+        .whenPressed(new ReleaseHatch(m_hatchSubsystem));
+    // While holding the shoulder button, drive at half speed
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+        .whenHeld(new HalveDriveSpeed(m_robotDrive));
+    */
   }
 
 
@@ -55,14 +84,15 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    //later return m_chooser.getSelected();
     return m_autoCommand;
   }
 
   public DriveTrain getDrive() {
-    return driveTrain;
+    return m_robotDrive;
   }
 
   public XboxController getController() {
-    return controller;
+    return m_driverController;
   }
 }

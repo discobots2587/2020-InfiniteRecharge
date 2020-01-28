@@ -91,11 +91,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    Command driveCommand = new ArcadeDrive(
-      m_robotContainer.getDrive(), 
-      () -> {return 0;}, 
-      () -> {return 0;}
-    );
+
   }
 
   /**
@@ -103,6 +99,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+ 
   }
 
   @Override

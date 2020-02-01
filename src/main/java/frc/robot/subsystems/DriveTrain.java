@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -15,18 +16,31 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class DriveTrain extends SubsystemBase {
   private TalonSRX leftMaster;
   private TalonSRX rightMaster;
-  private VictorSPX leftSlave;
+  // private VictorSPX leftSlave;
+  private TalonSRX leftSlave;
   private VictorSPX rightSlave;
 
   /**
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
+    this.leftMaster = new TalonSRX(10);
+    this.rightMaster = new TalonSRX(11);
+    // this.leftSlave = new VictorSPX(12);
+    this.leftSlave = new TalonSRX(14);
+    this.rightSlave = new VictorSPX(13);
 
+    this.leftSlave.follow(this.leftMaster);
+    this.rightSlave.follow(this.rightMaster);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void forward(double power) {
+    this.rightMaster.set(ControlMode.PercentOutput, power);
+    this.leftMaster.set(ControlMode.PercentOutput, power);
   }
 }

@@ -44,6 +44,7 @@ public class RobotContainer {
 
     // Configure default commands
     // Set default drive command --> arcade drive
+    /*
     m_robotDrive.setDefaultCommand(
       
       //Arcade Drive
@@ -52,7 +53,7 @@ public class RobotContainer {
         () -> m_driverController.getY(GenericHID.Hand.kLeft),
         () -> m_driverController.getX(GenericHID.Hand.kRight)
       )
-    );
+    );*/
   }
 
   /**

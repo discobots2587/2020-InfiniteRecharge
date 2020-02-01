@@ -7,20 +7,21 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Victor;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
-  private Victor left = new Victor(0);
-  private Victor right = new Victor(1);
-  private DifferentialDrive drive = new DifferentialDrive(left, right);
+  private TalonSRX left; 
+  private TalonSRX right;
 
   /**
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
-
+    this.left = new TalonSRX(1);
+    this.right = new TalonSRX(2);
   }
 
   @Override
@@ -28,7 +29,11 @@ public class DriveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public DifferentialDrive getDrive() {
-    return drive;
+  public void arcadeDrive(double throttle, double turn) {
+    double leftPower = throttle + turn;
+    double rightPower = throttle - turn;
+
+    left.set(ControlMode.PercentOutput, leftPower);
+    right.set(ControlMode.PercentOutput, rightPower);
   }
 }

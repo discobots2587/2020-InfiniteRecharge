@@ -29,7 +29,7 @@ public class RobotContainer {
 
   private final DriveTrain driveTrain = new DriveTrain();
 
-  XboxController controller = new XboxController(0);
+  public final  XboxController controller = new XboxController(0);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.

@@ -28,6 +28,11 @@ public class DriveTrain extends SubsystemBase {
     this.rightSlave.follow(this.rightMaster);
   }
 
+  /**
+   * Moves the drive forward at a given power
+   * 
+   * @param power the power to move forward at from -1 to 1
+   */
   public void forward(double power) {
     this.rightMaster.set(ControlMode.PercentOutput, power);
     this.leftMaster.set(ControlMode.PercentOutput, power);

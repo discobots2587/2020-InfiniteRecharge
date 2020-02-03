@@ -38,4 +38,14 @@ public class DriveTrain extends SubsystemBase {
     this.leftMaster.set(ControlMode.PercentOutput, power);
     this.rightMaster.set(ControlMode.PercentOutput, -power);
   }
+
+  /**
+   * Rotate the robot at a given power
+   * 
+   * @param power the power to rotate at from -1 to 1
+   */
+  public void rotate(double power) {
+    this.leftMaster.set(ControlMode.PercentOutput, power);
+    this.rightMaster.set(ControlMode.PercentOutput, power);
+  }
 }

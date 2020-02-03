@@ -12,13 +12,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveTrainConstants;;
 
 public class DriveTrain extends SubsystemBase {
-  private TalonSRX leftMaster = new TalonSRX(10);
-  private TalonSRX rightMaster = new TalonSRX(11);
-  // private VictorSPX leftSlave = new VictorSPX(12);
-  private TalonSRX leftSlave = new TalonSRX(14);
-  private VictorSPX rightSlave = new VictorSPX(13);
+  private TalonSRX leftMaster = new TalonSRX(DriveTrainConstants.kleftMasterID);
+  private TalonSRX rightMaster = new TalonSRX(DriveTrainConstants.krightMasterID);
+  // private VictorSPX leftSlave = new VictorSPX(DriveTrainConstants.kleftSlaveID);
+  private TalonSRX leftSlave = new TalonSRX(DriveTrainConstants.kleftSlaveTEMPID);
+  private VictorSPX rightSlave = new VictorSPX(DriveTrainConstants.krightSlaveID);
 
   /**
    * Creates a new DriveTrain.

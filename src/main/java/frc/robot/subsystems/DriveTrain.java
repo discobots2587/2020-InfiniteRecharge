@@ -12,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DriveTrainConstants;;
+import frc.robot.Constants.DriveTrainConstants;
 
 public class DriveTrain extends SubsystemBase {
   private TalonSRX leftMaster = new TalonSRX(DriveTrainConstants.kleftMasterID);

@@ -14,22 +14,16 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
-  private TalonSRX leftMaster;
-  private TalonSRX rightMaster;
-  // private VictorSPX leftSlave;
-  private TalonSRX leftSlave;
-  private VictorSPX rightSlave;
+  private TalonSRX leftMaster = new TalonSRX(10);
+  private TalonSRX rightMaster = new TalonSRX(11);
+  // private VictorSPX leftSlave = new VictorSPX(12);
+  private TalonSRX leftSlave = new TalonSRX(14);
+  private VictorSPX rightSlave = new VictorSPX(13);
 
   /**
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
-    this.leftMaster = new TalonSRX(10);
-    this.rightMaster = new TalonSRX(11);
-    // this.leftSlave = new VictorSPX(12);
-    this.leftSlave = new TalonSRX(14);
-    this.rightSlave = new VictorSPX(13);
-
     this.leftSlave.follow(this.leftMaster);
     this.rightSlave.follow(this.rightMaster);
   }

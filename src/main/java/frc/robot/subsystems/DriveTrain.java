@@ -34,7 +34,7 @@ public class DriveTrain extends SubsystemBase {
    * @param power the power to move forward at from -1 to 1
    */
   public void forward(double power) {
-    this.rightMaster.set(ControlMode.PercentOutput, power);
     this.leftMaster.set(ControlMode.PercentOutput, power);
+    this.rightMaster.set(ControlMode.PercentOutput, -power);
   }
 }

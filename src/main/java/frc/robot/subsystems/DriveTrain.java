@@ -34,11 +34,6 @@ public class DriveTrain extends SubsystemBase {
     this.rightSlave.follow(this.rightMaster);
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
   public void forward(double power) {
     this.rightMaster.set(ControlMode.PercentOutput, power);
     this.leftMaster.set(ControlMode.PercentOutput, power);

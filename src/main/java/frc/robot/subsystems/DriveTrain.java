@@ -30,7 +30,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Moves the drive forward at a given power
+   * Moves the drive forward at a given power.
    * 
    * @param power the power to move forward at from -1 to 1
    */
@@ -40,12 +40,26 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Rotate the robot at a given power
+   * Rotates the robot at a given power.
    * 
    * @param power the power to rotate at from -1 to 1
    */
   public void rotate(double power) {
     this.leftMaster.set(ControlMode.PercentOutput, power);
     this.rightMaster.set(ControlMode.PercentOutput, power);
+  }
+
+  /**
+   * Drives the robot using arcade controls.
+   * 
+   * @param forward the forward power
+   * @param turn the turning power
+   */
+  public void arcadeDrive(double forward, double turn) {
+    double leftPower = forward + turn;
+    double rightPower = forward - turn;
+
+    this.leftMaster.set(ControlMode.PercentOutput, leftPower);
+    this.rightMaster.set(ControlMode.PercentOutput, rightPower);
   }
 }

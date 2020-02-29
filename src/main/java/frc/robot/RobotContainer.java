@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeRollers;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
@@ -29,6 +30,8 @@ public class RobotContainer {
 
   private final DriveTrain driveTrain = new DriveTrain();
 
+  private final IntakeRollers intakeRollers = new IntakeRollers();
+
   public final  XboxController controller = new XboxController(0);
 
   /**
@@ -43,6 +46,10 @@ public class RobotContainer {
       new RunCommand(() -> driveTrain.arcadeDrive(
         controller.getY(GenericHID.Hand.kLeft),
         controller.getX(GenericHID.Hand.kRight)), driveTrain));
+
+    // Set default intake command to stop
+    intakeRollers.setDefaultCommand(
+      new RunCommand(() -> intakeRollers.stop(), intakeRollers));
   }
 
   /**

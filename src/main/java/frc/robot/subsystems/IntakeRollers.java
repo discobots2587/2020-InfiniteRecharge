@@ -23,7 +23,7 @@ public class IntakeRollers extends SubsystemBase {
   public IntakeRollers() {
     rollers.setNeutralMode(NeutralMode.Brake);
   }
-  
+
   /**
    * Spins the rollers at a given power
    * 
@@ -31,6 +31,13 @@ public class IntakeRollers extends SubsystemBase {
    */
   public void spin(double power) {
     rollers.set(ControlMode.PercentOutput, power);
+  }
+
+  /**
+   * Stop the rollers
+   */
+  public void stop() {
+    rollers.set(ControlMode.PercentOutput, 0);
   }
 
   @Override

@@ -23,6 +23,15 @@ public class IntakeRollers extends SubsystemBase {
   public IntakeRollers() {
     rollers.setNeutralMode(NeutralMode.Brake);
   }
+  
+  /**
+   * Spins the rollers at a given power
+   * 
+   * @param power the pwoer to spin the rollers at [-1, 1]. Negative values spin outwards.
+   */
+  public void spin(double power) {
+    rollers.set(ControlMode.PercentOutput, power);
+  }
 
   @Override
   public void periodic() {

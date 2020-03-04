@@ -21,15 +21,15 @@ public final class Constants {
         public static final int krightMasterID = 11;
         public static final int kleftSlaveID = 12;
         public static final int krightSlaveID = 13;
-        public static final int kleftSlaveTEMPID = 14;
     }
 
     public static final class IntakeRollersConstants {
         public static final int kRollersID = 20;
+        public static final int kConveyorID = 21;
     }
 
     public static final class FlywheelConstants {
-        public static final int kleftFlywheelTEMPID = 30;
-        public static final int krightFlywheelTEMPID = 31;
+        public static final int kleftFlywheelID = 30;
+        public static final int krightFlywheelID = 31;
     }
 }

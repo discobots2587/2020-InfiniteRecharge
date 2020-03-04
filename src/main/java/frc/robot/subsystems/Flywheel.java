@@ -16,8 +16,8 @@ import frc.robot.Constants.FlywheelConstants;
 
 public class Flywheel extends SubsystemBase {
 
-  private final TalonSRX leftFlywheel = new TalonSRX(FlywheelConstants.kleftFlywheelTEMPID);
-  private final TalonSRX rightFlywheel = new TalonSRX(FlywheelConstants.krightFlywheelTEMPID);
+  private final TalonSRX leftFlywheel = new TalonSRX(FlywheelConstants.kleftFlywheelID);
+  private final TalonSRX rightFlywheel = new TalonSRX(FlywheelConstants.krightFlywheelID);
 
   /**
    * Creates a new Flywheel.

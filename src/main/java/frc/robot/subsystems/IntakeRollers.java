@@ -16,7 +16,7 @@ import frc.robot.Constants.IntakeRollersConstants;
 
 public class IntakeRollers extends SubsystemBase {
   private TalonSRX rollers = new TalonSRX(IntakeRollersConstants.kRollersID);
-  private TalonSRX conveyor = new TalonSRX(21);
+  private TalonSRX conveyor = new TalonSRX(IntakeRollersConstants.kConveyorID);
 
   /**
    * Creates a new IntakeRollers.

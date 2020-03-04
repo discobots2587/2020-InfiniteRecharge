@@ -17,7 +17,6 @@ import frc.robot.Constants.DriveTrainConstants;
 public class DriveTrain extends SubsystemBase {
   private TalonSRX leftMaster = new TalonSRX(DriveTrainConstants.kleftMasterID);
   private TalonSRX rightMaster = new TalonSRX(DriveTrainConstants.krightMasterID);
-  // private VictorSPX leftSlave = new VictorSPX(DriveTrainConstants.kleftSlaveID);
   private TalonSRX leftSlave = new TalonSRX(DriveTrainConstants.kleftSlaveID);
   private VictorSPX rightSlave = new VictorSPX(DriveTrainConstants.krightSlaveID);
 

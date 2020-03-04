@@ -14,6 +14,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeRollers;
+import frc.robot.subsystems.Flywheel;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -28,7 +29,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain driveTrain = new DriveTrain();
   private final IntakeRollers intakeRollers = new IntakeRollers();
-
+  private final Flywheel flywheel = new Flywheel();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final  XboxController controller = new XboxController(0);
@@ -49,6 +50,11 @@ public class RobotContainer {
     // Set default intake command to stop
     intakeRollers.setDefaultCommand(
       new RunCommand(() -> intakeRollers.stop(), intakeRollers));
+
+    // Set default flywheel command to spin at max power
+    flywheel.setDefaultCommand(
+      new RunCommand(() -> flywheel.spin(1), flywheel)); //TODO: Change default flywheel to toggle default
+
   }
 
   /**
@@ -63,6 +69,10 @@ public class RobotContainer {
 
     new JoystickButton(controller, Button.kBumperLeft.value)
       .whileHeld(new RunCommand(() -> intakeRollers.spin(-0.5), intakeRollers));
+
+    //Change flywheel state
+    new JoystickButton(controller, Button.kA.value)
+      .whenPressed(new RunCommand(() -> flywheel.spin(1), flywheel)); //TODO: Change flywheel function to toggle when pressed
   }
 
 

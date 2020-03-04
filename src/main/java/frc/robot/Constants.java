@@ -16,4 +16,11 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final class DriveTrainConstants {
+        public static final int kleftMasterID = 10;
+        public static final int krightMasterID = 11;
+        public static final int kleftSlaveID = 12;
+        public static final int krightSlaveID = 13;
+        public static final int kleftSlaveTEMPID = 14;
+    }
 }

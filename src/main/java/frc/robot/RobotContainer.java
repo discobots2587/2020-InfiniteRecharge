@@ -65,10 +65,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(controller, Button.kBumperRight.value)
-      .whileHeld(new RunCommand(() -> intakeRollers.spin(1), intakeRollers));
+      .whileHeld(new RunCommand(() -> intakeRollers.spin(1, 0.75), intakeRollers));
 
     new JoystickButton(controller, Button.kBumperLeft.value)
-      .whileHeld(new RunCommand(() -> intakeRollers.spin(-0.5), intakeRollers));
+      .whileHeld(new RunCommand(() -> intakeRollers.spin(-0.5, -0.55), intakeRollers));
 
     //Change flywheel state
     new JoystickButton(controller, Button.kA.value)

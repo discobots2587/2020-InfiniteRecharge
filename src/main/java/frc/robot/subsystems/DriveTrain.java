@@ -18,13 +18,14 @@ public class DriveTrain extends SubsystemBase {
   private TalonSRX leftMaster = new TalonSRX(DriveTrainConstants.kleftMasterID);
   private TalonSRX rightMaster = new TalonSRX(DriveTrainConstants.krightMasterID);
   // private VictorSPX leftSlave = new VictorSPX(DriveTrainConstants.kleftSlaveID);
-  private TalonSRX leftSlave = new TalonSRX(DriveTrainConstants.kleftSlaveTEMPID);
+  private TalonSRX leftSlave = new TalonSRX(DriveTrainConstants.kleftSlaveID);
   private VictorSPX rightSlave = new VictorSPX(DriveTrainConstants.krightSlaveID);
 
   /**
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
+    this.rightMaster.setInverted(true);
     this.leftSlave.follow(this.leftMaster);
     this.rightSlave.follow(this.rightMaster);
   }

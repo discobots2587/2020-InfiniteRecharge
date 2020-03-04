@@ -31,5 +31,7 @@ public final class Constants {
     public static final class FlywheelConstants {
         public static final int kleftFlywheelID = 30;
         public static final int krightFlywheelID = 31;
+
+        public static final int kindexerID = 32;
     }
 }

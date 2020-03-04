@@ -27,4 +27,9 @@ public final class Constants {
     public static final class IntakeRollersConstants {
         public static final int kRollersID = 20;
     }
+
+    public static final class FlywheelConstants {
+        public static final int kleftFlywheelTEMPID = 30;
+        public static final int krightFlywheelTEMPID = 31;
+    }
 }

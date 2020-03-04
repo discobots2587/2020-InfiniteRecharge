@@ -15,6 +15,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeRollers;
 import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -30,6 +31,7 @@ public class RobotContainer {
   private final DriveTrain driveTrain = new DriveTrain();
   private final IntakeRollers intakeRollers = new IntakeRollers();
   private final Flywheel flywheel = new Flywheel();
+  private final Indexer indexer = new Indexer();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final  XboxController controller = new XboxController(0);
@@ -55,6 +57,9 @@ public class RobotContainer {
     flywheel.setDefaultCommand(
       new RunCommand(() -> flywheel.spin(1), flywheel)); //TODO: Change default flywheel to toggle default
 
+    // Set default indexer command to stop
+    indexer.setDefaultCommand(
+      new RunCommand(() -> indexer.stop(), indexer));
   }
 
   /**
@@ -69,6 +74,10 @@ public class RobotContainer {
 
     new JoystickButton(controller, Button.kBumperLeft.value)
       .whileHeld(new RunCommand(() -> intakeRollers.spin(-0.5, -0.55), intakeRollers));
+
+    //Spin indexer. TODO: Use L and R Triggers instead of gamepad buttons
+    new JoystickButton(controller, Button.kX.value)
+      .whileHeld(new RunCommand(() -> indexer.spin(0.5), indexer));
 
     //Change flywheel state
     new JoystickButton(controller, Button.kA.value)

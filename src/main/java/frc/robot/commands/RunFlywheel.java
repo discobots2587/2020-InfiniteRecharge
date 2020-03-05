@@ -55,6 +55,7 @@ public class RunFlywheel extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // Never going to end normally, doesn't matter if interrupted
   }
 
   // Returns true when the command should end.

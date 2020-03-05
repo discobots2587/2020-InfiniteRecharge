@@ -45,6 +45,10 @@ public class RunFlywheel extends CommandBase {
       case HIGHGOAL:
         flywheel.spin(FlywheelConstants.khighGoalPower);
         break;
+
+      default:
+        flywheel.stop();
+        break;
     }
   }
 

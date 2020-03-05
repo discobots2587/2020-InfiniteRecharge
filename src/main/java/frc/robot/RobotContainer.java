@@ -64,7 +64,7 @@ public class RobotContainer {
     );
 
     // Set default flywheel command to spin at max power
-    flywheel.setDefaultCommand(new RunFlywheel(flywheel)); //TODO: Change default flywheel to toggle default
+    flywheel.setDefaultCommand(new RunFlywheel(flywheel));
 
     // Set default indexer command to stop
     indexer.setDefaultCommand(
@@ -90,7 +90,6 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kY.value)
       .whileHeld(new RunCommand(() -> intakeRollers.spin(-0.5), intakeRollers));
 
-    //Spin indexer. TODO: Use L and R Triggers instead of gamepad buttons
     new JoystickButton(controller, Button.kBumperRight.value)
       .whileHeld(new RunCommand(() -> indexer.spin(0.5), indexer));
 

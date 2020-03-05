@@ -16,7 +16,7 @@ import frc.robot.Constants.DriveTrainConstants;
 
 public class DriveTrain extends SubsystemBase {
   private TalonSRX leftMaster = new TalonSRX(DriveTrainConstants.kleftMasterID);
-  private TalonSRX rightMaster = new TalonSRX(DriveTrainConstants.krightMasterID);
+  // private TalonSRX rightMaster = new TalonSRX(DriveTrainConstants.krightMasterID);
   private TalonSRX leftSlave = new TalonSRX(DriveTrainConstants.kleftSlaveID);
   private VictorSPX rightSlave = new VictorSPX(DriveTrainConstants.krightSlaveID);
 
@@ -24,9 +24,9 @@ public class DriveTrain extends SubsystemBase {
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
-    this.rightMaster.setInverted(true);
+    this.rightSlave.setInverted(true);
     this.leftSlave.follow(this.leftMaster);
-    this.rightSlave.follow(this.rightMaster);
+    // this.rightSlave.follow(this.rightMaster);
   }
 
   /**
@@ -36,7 +36,7 @@ public class DriveTrain extends SubsystemBase {
    */
   public void forward(double power) {
     this.leftMaster.set(ControlMode.PercentOutput, power);
-    this.rightMaster.set(ControlMode.PercentOutput, -power);
+    this.rightSlave.set(ControlMode.PercentOutput, -power);
   }
 
   /**
@@ -46,7 +46,7 @@ public class DriveTrain extends SubsystemBase {
    */
   public void rotate(double power) {
     this.leftMaster.set(ControlMode.PercentOutput, power);
-    this.rightMaster.set(ControlMode.PercentOutput, power);
+    this.rightSlave.set(ControlMode.PercentOutput, power);
   }
 
   /**
@@ -60,7 +60,7 @@ public class DriveTrain extends SubsystemBase {
     double rightPower = forward - turn;
 
     this.leftMaster.set(ControlMode.PercentOutput, leftPower);
-    this.rightMaster.set(ControlMode.PercentOutput, rightPower);
+    this.rightSlave.set(ControlMode.PercentOutput, rightPower);
   }
 
   /**
@@ -71,6 +71,6 @@ public class DriveTrain extends SubsystemBase {
    */
   public void tankDrive(double leftPower, double rightPower) {
     this.leftMaster.set(ControlMode.PercentOutput, leftPower);
-    this.rightMaster.set(ControlMode.PercentOutput, rightPower);
+    this.rightSlave.set(ControlMode.PercentOutput, rightPower);
   }
 }

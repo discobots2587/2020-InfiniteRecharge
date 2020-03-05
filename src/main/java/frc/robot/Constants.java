@@ -25,13 +25,18 @@ public final class Constants {
 
     public static final class IntakeRollersConstants {
         public static final int kRollersID = 20;
-        public static final int kConveyorID = 21;
     }
-
+    
     public static final class FlywheelConstants {
         public static final int kleftFlywheelID = 30;
         public static final int krightFlywheelID = 31;
+    }
+    
+    public static final class ConveyorConstants {
+        public static final int kConveyorID = 40;
+    }
 
-        public static final int kindexerID = 32;
+    public static final class IndexerConstants {
+        public static final int kindexerID = 50;
     }
 }

@@ -26,7 +26,7 @@ public class Flywheel extends SubsystemBase {
     leftFlywheel.setNeutralMode(NeutralMode.Coast);
     rightFlywheel.setNeutralMode(NeutralMode.Coast);
 
-    leftFlywheel.setInverted(true);  //might be rightFlywheel, but need to spin in same dir
+    rightFlywheel.setInverted(true);  //might be rightFlywheel, but need to spin in same dir
   }
 
   /**

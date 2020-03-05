@@ -12,33 +12,33 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.ConveyorConstants;
 
-public class Indexer extends SubsystemBase {
-
-  private final TalonSRX indexer = new TalonSRX(IndexerConstants.kindexerID);
-
+public class Conveyor extends SubsystemBase {
+  private TalonSRX conveyor = new TalonSRX(ConveyorConstants.kConveyorID);
+  
   /**
-   * Creates a new Indexer.
+   * Creates a new Conveyor.
    */
-  public Indexer() {
-    indexer.setNeutralMode(NeutralMode.Brake);
+  public Conveyor() {
+    conveyor.setNeutralMode(NeutralMode.Brake);
+    conveyor.setInverted(true);
   }
 
   /**
-   * Spins the indexer at a given power
+   * Spins the conveyor at a given power
    * 
-   * @param power the power to spin the indexer at [-1, 1]. Negative values spin outwards.
+   * @param power the power to spin the conveyor at [-1, 1]. Negative values spin outwards.
    */
-  public void spin(final double power) {
-    indexer.set(ControlMode.PercentOutput, power);
+  public void spin(double power) {
+    conveyor.set(ControlMode.PercentOutput, power);
   }
 
   /**
-   * Stop the indexer
+   * Stop the conveyor
    */
   public void stop() {
-    indexer.set(ControlMode.PercentOutput, 0);
+    conveyor.set(ControlMode.PercentOutput, 0);
   }
 
   @Override

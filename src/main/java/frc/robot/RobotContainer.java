@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeRollers;
@@ -30,6 +31,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain driveTrain = new DriveTrain();
   private final IntakeRollers intakeRollers = new IntakeRollers();
+  private final Conveyor conveyor = new Conveyor();
   private final Flywheel flywheel = new Flywheel();
   private final Indexer indexer = new Indexer();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -45,17 +47,21 @@ public class RobotContainer {
 
     // Set default drive comand to split-stick arcade
     driveTrain.setDefaultCommand(
-      new RunCommand(() -> driveTrain.arcadeDrive(
+      new RunCommand(() -> driveTrain.tankDrive(
         controller.getY(GenericHID.Hand.kLeft),
-        controller.getX(GenericHID.Hand.kRight)), driveTrain));
+        controller.getY(GenericHID.Hand.kRight)), driveTrain));
 
     // Set default intake command to stop
     intakeRollers.setDefaultCommand(
       new RunCommand(() -> intakeRollers.stop(), intakeRollers));
 
+    conveyor.setDefaultCommand(
+      new RunCommand(() -> conveyor.stop(), conveyor)
+    );
+
     // Set default flywheel command to spin at max power
     flywheel.setDefaultCommand(
-      new RunCommand(() -> flywheel.spin(1), flywheel)); //TODO: Change default flywheel to toggle default
+      new RunCommand(() -> flywheel.spin(0), flywheel)); //TODO: Change default flywheel to toggle default
 
     // Set default indexer command to stop
     indexer.setDefaultCommand(
@@ -69,11 +75,17 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(controller, Button.kY.value)
+      .whileHeld(new RunCommand(() -> conveyor.spin(0.5), conveyor));
+
+    new JoystickButton(controller, Button.kB.value)
+      .whileHeld(new RunCommand(() -> conveyor.spin(-0.5), conveyor));
+
     new JoystickButton(controller, Button.kBumperRight.value)
-      .whileHeld(new RunCommand(() -> intakeRollers.spin(1, 0.75), intakeRollers));
+      .whileHeld(new RunCommand(() -> intakeRollers.spin(1), intakeRollers));
 
     new JoystickButton(controller, Button.kBumperLeft.value)
-      .whileHeld(new RunCommand(() -> intakeRollers.spin(-0.5, -0.55), intakeRollers));
+      .whileHeld(new RunCommand(() -> intakeRollers.spin(-0.5), intakeRollers));
 
     //Spin indexer. TODO: Use L and R Triggers instead of gamepad buttons
     new JoystickButton(controller, Button.kX.value)
@@ -81,7 +93,7 @@ public class RobotContainer {
 
     //Change flywheel state
     new JoystickButton(controller, Button.kA.value)
-      .whenPressed(new RunCommand(() -> flywheel.spin(1), flywheel)); //TODO: Change flywheel function to toggle when pressed
+      .whileHeld(new RunCommand(() -> flywheel.spin(1), flywheel)); //TODO: Change flywheel function to toggle when pressed
   }
 
 

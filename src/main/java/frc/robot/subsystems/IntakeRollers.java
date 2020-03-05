@@ -16,7 +16,6 @@ import frc.robot.Constants.IntakeRollersConstants;
 
 public class IntakeRollers extends SubsystemBase {
   private TalonSRX rollers = new TalonSRX(IntakeRollersConstants.kRollersID);
-  private TalonSRX conveyor = new TalonSRX(IntakeRollersConstants.kConveyorID);
 
   /**
    * Creates a new IntakeRollers.
@@ -24,19 +23,15 @@ public class IntakeRollers extends SubsystemBase {
   public IntakeRollers() {
     rollers.setNeutralMode(NeutralMode.Brake);
     rollers.setInverted(true);
-
-    conveyor.setNeutralMode(NeutralMode.Brake);
-    conveyor.setInverted(true);
   }
 
   /**
    * Spins the rollers at a given power
    * 
-   * @param power the pwoer to spin the rollers at [-1, 1]. Negative values spin outwards.
+   * @param power the power to spin the rollers at [-1, 1]. Negative values spin outwards.
    */
-  public void spin(double rollerPower, double conveyorPower) {
-    rollers.set(ControlMode.PercentOutput, rollerPower);
-    conveyor.set(ControlMode.PercentOutput, conveyorPower);
+  public void spin(double power) {
+    rollers.set(ControlMode.PercentOutput, power);
   }
 
   /**
@@ -44,7 +39,6 @@ public class IntakeRollers extends SubsystemBase {
    */
   public void stop() {
     rollers.set(ControlMode.PercentOutput, 0);
-    conveyor.set(ControlMode.PercentOutput, 0);
   }
 
   @Override

@@ -19,6 +19,12 @@ public class Flywheel extends SubsystemBase {
   private final TalonSRX leftFlywheel = new TalonSRX(FlywheelConstants.kleftFlywheelID);
   private final TalonSRX rightFlywheel = new TalonSRX(FlywheelConstants.krightFlywheelID);
 
+  public static enum FlywheelStates {
+    OFF, LOWGOAL, HIGHGOAL
+  }
+
+  private FlywheelStates state = FlywheelStates.OFF;
+
   /**
    * Creates a new Flywheel.
    */
@@ -39,13 +45,12 @@ public class Flywheel extends SubsystemBase {
     rightFlywheel.set(ControlMode.PercentOutput, power);
   }
 
-  /**
-   * Toggle the current speed of flywheel
-   * 
-   * @param defaultState the default state of the flywheel. 0 for low speed and 1 for high speed. 
-   */
-  public void toggle(final double defaultState) {
-    //TODO: Create smart toggle function 
+  public void setState(FlywheelStates iState) {
+    state = iState;
+  }
+
+  public FlywheelStates getState() {
+    return state;
   }
 
   /**

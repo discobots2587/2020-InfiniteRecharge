@@ -30,6 +30,9 @@ public final class Constants {
     public static final class FlywheelConstants {
         public static final int kleftFlywheelID = 30;
         public static final int krightFlywheelID = 31;
+
+        public static final double klowGoalPower = 0.2;
+        public static final double khighGoalPower = 1.0;
     }
     
     public static final class ConveyorConstants {

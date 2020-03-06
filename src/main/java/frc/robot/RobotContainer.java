@@ -10,11 +10,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.DoNothing;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeRollers;
 import frc.robot.subsystems.Flywheel.FlywheelStates;
 import frc.robot.subsystems.Flywheel;
@@ -32,15 +31,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain driveTrain = new DriveTrain();
   private final IntakeRollers intakeRollers = new IntakeRollers();
   private final Conveyor conveyor = new Conveyor();
   private final Flywheel flywheel = new Flywheel();
   private final Indexer indexer = new Indexer();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
+  
   private final  XboxController controller = new XboxController(0);
+
+  private final DoNothing doNothing = new DoNothing();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -109,7 +108,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return doNothing;
   }
 }

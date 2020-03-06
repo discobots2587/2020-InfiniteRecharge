@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.DoNothing;
+import frc.robot.commands.DriveForwardOnly;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DriveTrain;
@@ -40,6 +41,7 @@ public class RobotContainer {
   private final  XboxController controller = new XboxController(0);
 
   private final DoNothing doNothing = new DoNothing();
+  private final DriveForwardOnly driveForwardHalfSec = new DriveForwardOnly(driveTrain, 0.5);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -52,11 +54,14 @@ public class RobotContainer {
     driveTrain.setDefaultCommand(
       new RunCommand(() -> driveTrain.tankDrive(
         controller.getY(Hand.kLeft),
-        controller.getY(Hand.kRight)), driveTrain));
+        controller.getY(Hand.kRight)), driveTrain
+      )
+    );
 
     // Set default intake command to stop
     intakeRollers.setDefaultCommand(
-      new RunCommand(() -> intakeRollers.stop(), intakeRollers));
+      new RunCommand(() -> intakeRollers.stop(), intakeRollers)
+    );
 
     conveyor.setDefaultCommand(
       new RunCommand(() -> conveyor.stop(), conveyor)
@@ -67,7 +72,8 @@ public class RobotContainer {
 
     // Set default indexer command to stop
     indexer.setDefaultCommand(
-      new RunCommand(() -> indexer.stop(), indexer));
+      new RunCommand(() -> indexer.stop(), indexer)
+    );
   }
 
   /**
@@ -108,6 +114,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return doNothing;
+    return driveForwardHalfSec;
   }
 }

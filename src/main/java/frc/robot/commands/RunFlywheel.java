@@ -19,9 +19,9 @@ public class RunFlywheel extends CommandBase {
   /**
    * Creates a new RunFlywheel.
    */
-  public RunFlywheel(Flywheel iFlywheel) {
-    flywheel = iFlywheel;
-    addRequirements(iFlywheel);
+  public RunFlywheel(Flywheel iflywheel) {
+    flywheel = iflywheel;
+    addRequirements(iflywheel);
   }
 
   // Called when the command is initially scheduled.
@@ -33,6 +33,7 @@ public class RunFlywheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    state = flywheel.getState();
     switch (state) {
       case OFF:
         flywheel.stop();

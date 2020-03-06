@@ -99,7 +99,7 @@ public class RobotContainer {
           flywheel.setState(FlywheelStates.LOWGOAL);
         } else {
           flywheel.setState(FlywheelStates.OFF);
-        }}));
+        }}, flywheel));
 }
 
 

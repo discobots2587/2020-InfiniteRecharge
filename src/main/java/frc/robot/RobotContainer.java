@@ -16,6 +16,7 @@ import frc.robot.commands.RunFlywheel;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.IntakeRollers;
+import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Flywheel.FlywheelStates;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Indexer;
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final Conveyor conveyor = new Conveyor();
   private final Flywheel flywheel = new Flywheel();
   private final Indexer indexer = new Indexer();
+  private final Lift lift = new Lift();
   
   private final  XboxController controller = new XboxController(0);
 
@@ -74,6 +76,10 @@ public class RobotContainer {
     indexer.setDefaultCommand(
       new RunCommand(() -> indexer.stop(), indexer)
     );
+
+    lift.setDefaultCommand(
+      new RunCommand(() -> lift.stopWinch(), lift)
+    );
   }
 
   /**
@@ -98,13 +104,33 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kBumperRight.value)
       .whileHeld(new RunCommand(() -> indexer.spin(0.5), indexer));
 
+    new JoystickButton(controller, Button.kBumperLeft.value)
+      .whenPressed(new InstantCommand(() -> {
+        if(flywheel.getState() == FlywheelStates.OFF || flywheel.getState() == FlywheelStates.LOWGOAL) {
+          flywheel.setState(FlywheelStates.HIGHGOAL);
+        } else {
+          flywheel.setState(FlywheelStates.OFF);
+      }}, flywheel));
+
     new JoystickButton(controller, Button.kStart.value)
       .whenPressed(new InstantCommand(() -> {
-        if(flywheel.getState() == FlywheelStates.OFF) {
+        if(flywheel.getState() == FlywheelStates.OFF || flywheel.getState() == FlywheelStates.HIGHGOAL) {
           flywheel.setState(FlywheelStates.LOWGOAL);
         } else {
           flywheel.setState(FlywheelStates.OFF);
         }}, flywheel));
+
+    new Trigger(() -> controller.getPOV() == 0)
+      .whileActiveContinuous(new RunCommand(() -> lift.winchUp(), lift));
+
+    new Trigger(() -> controller.getPOV() == 180)
+      .whileActiveContinuous(new RunCommand(() -> lift.winchDown(), lift));
+
+    new Trigger(() -> controller.getPOV() == 90)
+      .whileActiveContinuous(new RunCommand(() -> lift.pullPiston(), lift));
+
+    new Trigger(() -> controller.getPOV() == 270)
+      .whileActiveContinuous(new RunCommand(() -> lift.pushPiston(), lift));
 }
 
 

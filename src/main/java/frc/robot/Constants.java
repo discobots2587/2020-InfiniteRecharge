@@ -45,8 +45,9 @@ public final class Constants {
 
     public static final class LiftConstants {
         public static final int kwinchID = 60;
+        public static final double winchUpPower = 0.8;
+        public static final double winchDownPower = 0.2;
 
-        public static final int kleftSolenoidChannel = 0;
-        public static final int krightSolenoidChannel = 1;
+        public static final int ksolenoidChannel = 0;
     }
 }

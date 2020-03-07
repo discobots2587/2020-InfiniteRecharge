@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LiftConstants;
@@ -19,6 +20,7 @@ public class Lift extends SubsystemBase {
   private final TalonSRX winch = new TalonSRX(LiftConstants.kwinchID);
 
   private final Solenoid solenoid = new Solenoid(LiftConstants.ksolenoidChannel);
+  private final Compressor c = new Compressor(0);
 
   /**
    * Creates a new Lift.
@@ -52,5 +54,6 @@ public class Lift extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    System.out.println(c.enabled());
   }
 }

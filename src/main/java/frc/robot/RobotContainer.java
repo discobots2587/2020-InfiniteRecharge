@@ -77,9 +77,9 @@ public class RobotContainer {
       new RunCommand(() -> indexer.stop(), indexer)
     );
 
-    lift.setDefaultCommand(
-      new RunCommand(() -> lift.stopWinch(), lift)
-    );
+    // lift.setDefaultCommand(
+    //   new RunCommand(() -> lift.stopWinch(), lift)
+    // );
   }
 
   /**
@@ -90,10 +90,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new Trigger(() -> controller.getTriggerAxis(Hand.kLeft) > 0.75)
-      .whileActiveContinuous(new RunCommand(() -> conveyor.spin(0.5), conveyor));
+      .whileActiveContinuous(new RunCommand(() -> conveyor.spin(1), conveyor));
 
     new JoystickButton(controller, Button.kB.value)
-      .whileHeld(new RunCommand(() -> conveyor.spin(-0.5), conveyor));
+      .whileHeld(new RunCommand(() -> conveyor.spin(-1), conveyor));
 
     new Trigger(() ->  controller.getTriggerAxis(Hand.kRight) > 0.75)
       .whileActiveContinuous(new RunCommand(() -> intakeRollers.spin(1), intakeRollers));
@@ -101,8 +101,14 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kY.value)
       .whileHeld(new RunCommand(() -> intakeRollers.spin(-0.5), intakeRollers));
 
+    new JoystickButton(controller, Button.kX.value)
+      .whenPressed(new InstantCommand(() -> intakeRollers.deploy(), intakeRollers));
+
     new JoystickButton(controller, Button.kBumperRight.value)
-      .whileHeld(new RunCommand(() -> indexer.spin(0.5), indexer));
+      .whileHeld(new RunCommand(() -> {
+        indexer.spin(0.5);
+        conveyor.spin(0.75);
+      }, indexer, conveyor));
 
     new JoystickButton(controller, Button.kBumperLeft.value)
       .whenPressed(new InstantCommand(() -> {
@@ -120,11 +126,11 @@ public class RobotContainer {
           flywheel.setState(FlywheelStates.OFF);
         }}, flywheel));
 
-    new Trigger(() -> controller.getPOV() == 0)
-      .whileActiveContinuous(new RunCommand(() -> lift.winchUp(), lift));
+    // new Trigger(() -> controller.getPOV() == 0)
+    //   .whileActiveContinuous(new RunCommand(() -> lift.winchUp(), lift));
 
-    new Trigger(() -> controller.getPOV() == 180)
-      .whileActiveContinuous(new RunCommand(() -> lift.winchDown(), lift));
+    // new Trigger(() -> controller.getPOV() == 180)
+    //   .whileActiveContinuous(new RunCommand(() -> lift.winchDown(), lift));
 
     new Trigger(() -> controller.getPOV() == 90)
       .whileActiveContinuous(new RunCommand(() -> lift.pullPiston(), lift));

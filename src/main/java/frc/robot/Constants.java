@@ -25,6 +25,9 @@ public final class Constants {
 
     public static final class IntakeRollersConstants {
         public static final int kRollersID = 20;
+
+        public static final int kintakeSolenoidChannel = 1;
+
     }
     
     public static final class FlywheelConstants {
@@ -48,6 +51,7 @@ public final class Constants {
         public static final double winchUpPower = 0.8;
         public static final double winchDownPower = 0.2;
 
-        public static final int ksolenoidChannel = 0;
+        public static final int ksolenoidChannel = 2;
+        // shifter is 0
     }
 }

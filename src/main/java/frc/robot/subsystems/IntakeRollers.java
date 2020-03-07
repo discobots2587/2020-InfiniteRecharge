@@ -11,11 +11,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeRollersConstants;
 
 public class IntakeRollers extends SubsystemBase {
   private TalonSRX rollers = new TalonSRX(IntakeRollersConstants.kRollersID);
+
+  private final Solenoid deploy = new Solenoid(IntakeRollersConstants.kintakeSolenoidChannel);
 
   /**
    * Creates a new IntakeRollers.
@@ -39,6 +42,10 @@ public class IntakeRollers extends SubsystemBase {
    */
   public void stop() {
     rollers.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void deploy() {
+    deploy.set(!deploy.get());
   }
 
   @Override

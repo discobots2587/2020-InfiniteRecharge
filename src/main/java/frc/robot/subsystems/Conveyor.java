@@ -22,7 +22,7 @@ public class Conveyor extends SubsystemBase {
    */
   public Conveyor() {
     conveyor.setNeutralMode(NeutralMode.Brake);
-    conveyor.setInverted(true);
+    conveyor.setInverted(false);
   }
 
   /**

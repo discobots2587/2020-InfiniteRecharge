@@ -31,12 +31,8 @@ public class Lift extends SubsystemBase {
     solenoid.set(true);
   }
 
-  public void pullPiston() {
-    solenoid.set(false);
-  }
-
-  public void pushPiston() {
-    solenoid.set(true);
+  public void toggle() {
+    solenoid.set(!solenoid.get());
   }
 
   public void winchUp() {

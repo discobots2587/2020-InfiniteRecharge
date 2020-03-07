@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveTrainConstants;
 
@@ -19,6 +20,8 @@ public class DriveTrain extends SubsystemBase {
   // private TalonSRX rightMaster = new TalonSRX(DriveTrainConstants.krightMasterID);
   private TalonSRX leftSlave = new TalonSRX(DriveTrainConstants.kleftSlaveID);
   private VictorSPX rightSlave = new VictorSPX(DriveTrainConstants.krightSlaveID);
+
+  private final Solenoid shifter = new Solenoid(DriveTrainConstants.kshifterChannel);
 
   /**
    * Creates a new DriveTrain.
@@ -36,7 +39,7 @@ public class DriveTrain extends SubsystemBase {
    */
   public void forward(double power) {
     this.leftMaster.set(ControlMode.PercentOutput, power);
-    this.rightSlave.set(ControlMode.PercentOutput, -power);
+    this.rightSlave.set(ControlMode.PercentOutput, power);
   }
 
   /**
@@ -46,7 +49,7 @@ public class DriveTrain extends SubsystemBase {
    */
   public void rotate(double power) {
     this.leftMaster.set(ControlMode.PercentOutput, power);
-    this.rightSlave.set(ControlMode.PercentOutput, power);
+    this.rightSlave.set(ControlMode.PercentOutput, -power);
   }
 
   /**
@@ -72,5 +75,9 @@ public class DriveTrain extends SubsystemBase {
   public void tankDrive(double leftPower, double rightPower) {
     this.leftMaster.set(ControlMode.PercentOutput, leftPower);
     this.rightSlave.set(ControlMode.PercentOutput, rightPower);
+  }
+
+  public void shift() {
+    shifter.set(!shifter.get());
   }
 }

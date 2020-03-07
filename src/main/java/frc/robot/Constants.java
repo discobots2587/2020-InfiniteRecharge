@@ -21,12 +21,14 @@ public final class Constants {
         public static final int krightMasterID = 11;
         public static final int kleftSlaveID = 12;
         public static final int krightSlaveID = 13;
+
+        public static final int kshifterChannel = 0;
     }
 
     public static final class IntakeRollersConstants {
         public static final int kRollersID = 20;
 
-        public static final int kintakeSolenoidChannel = 1;
+        public static final int kdeployChannel = 1;
 
     }
     
@@ -52,6 +54,5 @@ public final class Constants {
         public static final double winchDownPower = 0.2;
 
         public static final int ksolenoidChannel = 2;
-        // shifter is 0
     }
 }

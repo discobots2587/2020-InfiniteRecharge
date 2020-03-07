@@ -13,11 +13,13 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.DoNothing;
 import frc.robot.commands.DriveForwardOnly;
 import frc.robot.commands.RunFlywheel;
+import frc.robot.commands.RunIntake;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.IntakeRollers;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Flywheel.FlywheelStates;
+import frc.robot.subsystems.IntakeRollers.IntakeRollersStates;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -60,16 +62,12 @@ public class RobotContainer {
       )
     );
 
-    // Set default intake command to stop
-    intakeRollers.setDefaultCommand(
-      new RunCommand(() -> intakeRollers.stop(), intakeRollers)
-    );
+    intakeRollers.setDefaultCommand(new RunIntake(intakeRollers));
 
     conveyor.setDefaultCommand(
       new RunCommand(() -> conveyor.stop(), conveyor)
     );
 
-    // Set default flywheel command to spin at max power
     flywheel.setDefaultCommand(new RunFlywheel(flywheel));
 
     // Set default indexer command to stop
@@ -77,9 +75,9 @@ public class RobotContainer {
       new RunCommand(() -> indexer.stop(), indexer)
     );
 
-    // lift.setDefaultCommand(
-    //   new RunCommand(() -> lift.stopWinch(), lift)
-    // );
+    lift.setDefaultCommand(
+      new RunCommand(() -> lift.stopWinch(), lift)
+    );
   }
 
   /**
@@ -96,13 +94,20 @@ public class RobotContainer {
       .whileHeld(new RunCommand(() -> conveyor.spin(-1), conveyor));
 
     new Trigger(() ->  controller.getTriggerAxis(Hand.kRight) > 0.75)
-      .whileActiveContinuous(new RunCommand(() -> intakeRollers.spin(1), intakeRollers));
+      .whileActiveOnce(new InstantCommand(() -> {
+        if(intakeRollers.getState() == IntakeRollersStates.OFF || intakeRollers.getState() == IntakeRollersStates.OUT) {
+          intakeRollers.setState(IntakeRollersStates.IN);
+        } else {
+          intakeRollers.setState(IntakeRollersStates.OFF);
+        }
+      }, intakeRollers));
 
     new JoystickButton(controller, Button.kY.value)
-      .whileHeld(new RunCommand(() -> intakeRollers.spin(-0.5), intakeRollers));
+      .whenPressed(new InstantCommand(() -> intakeRollers.setState(IntakeRollersStates.OUT), intakeRollers))
+      .whenReleased(new InstantCommand(() -> intakeRollers.setState(IntakeRollersStates.OFF), intakeRollers));
 
     new JoystickButton(controller, Button.kX.value)
-      .whenPressed(new InstantCommand(() -> intakeRollers.deploy(), intakeRollers));
+      .whenPressed(new InstantCommand(() -> driveTrain.shift(), driveTrain));
 
     new JoystickButton(controller, Button.kBumperRight.value)
       .whileHeld(new RunCommand(() -> {
@@ -133,10 +138,10 @@ public class RobotContainer {
     //   .whileActiveContinuous(new RunCommand(() -> lift.winchDown(), lift));
 
     new Trigger(() -> controller.getPOV() == 90)
-      .whileActiveContinuous(new RunCommand(() -> lift.pullPiston(), lift));
+      .whileActiveContinuous(new RunCommand(() -> lift.toggle(), lift));
 
     new Trigger(() -> controller.getPOV() == 270)
-      .whileActiveContinuous(new RunCommand(() -> lift.pushPiston(), lift));
+      .whileActiveContinuous(new RunCommand(() -> intakeRollers.deploy(), intakeRollers));
 }
 
 

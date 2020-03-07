@@ -18,7 +18,13 @@ import frc.robot.Constants.IntakeRollersConstants;
 public class IntakeRollers extends SubsystemBase {
   private TalonSRX rollers = new TalonSRX(IntakeRollersConstants.kRollersID);
 
-  private final Solenoid deploy = new Solenoid(IntakeRollersConstants.kintakeSolenoidChannel);
+  private final Solenoid deploy = new Solenoid(IntakeRollersConstants.kdeployChannel);
+
+  public static enum IntakeRollersStates {
+    OFF, IN, OUT
+  }
+
+  private IntakeRollersStates state = IntakeRollersStates.OFF;
 
   /**
    * Creates a new IntakeRollers.
@@ -46,6 +52,14 @@ public class IntakeRollers extends SubsystemBase {
 
   public void deploy() {
     deploy.set(!deploy.get());
+  }
+
+  public void setState(IntakeRollersStates istate) {
+    state = istate;
+  }
+
+  public IntakeRollersStates getState() {
+    return state;
   }
 
   @Override

@@ -28,7 +28,7 @@ public class Lift extends SubsystemBase {
   public Lift() {
     winch.setNeutralMode(NeutralMode.Brake);
     winch.setInverted(false);
-    solenoid.set(true);
+    // solenoid.set(true);
   }
 
   public void toggle() {

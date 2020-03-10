@@ -24,7 +24,10 @@ import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -45,8 +48,29 @@ public class RobotContainer {
   private final  XboxController controller = new XboxController(0);
 
   private final DoNothing doNothing = new DoNothing();
-  private final DriveForwardOnly driveForwardHalfSec = new DriveForwardOnly(driveTrain, 0.5);
+  private final DriveForwardOnly driveForwardHalfSec = new DriveForwardOnly(driveTrain, 5);
+  private final SequentialCommandGroup auto = new SequentialCommandGroup(
+    new InstantCommand(() -> intakeRollers.deploy(), intakeRollers),
+    driveForwardHalfSec
+  );
 
+  private final SequentialCommandGroup lowgoal = new SequentialCommandGroup(
+    new InstantCommand(() -> intakeRollers.deploy(), intakeRollers),
+    new DriveForwardOnly(driveTrain, 7),
+    new InstantCommand(() -> flywheel.setState(FlywheelStates.LOWGOAL), flywheel),
+    new ParallelRaceGroup(
+      new RunCommand(() -> {
+        conveyor.spin(1);
+        indexer.spin(1);
+      }, conveyor, indexer),
+      new WaitCommand(3)
+    ),
+    new InstantCommand(() -> {
+      conveyor.spin(0);
+      indexer.spin(0);
+      flywheel.setState(FlywheelStates.LOWGOAL);
+    }, conveyor, indexer, flywheel)
+  );
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -56,9 +80,9 @@ public class RobotContainer {
 
     // Set default drive comand to split-stick arcade
     driveTrain.setDefaultCommand(
-      new RunCommand(() -> driveTrain.tankDrive(
+      new RunCommand(() -> driveTrain.arcadeDrive(
         controller.getY(Hand.kLeft),
-        controller.getY(Hand.kRight)), driveTrain
+        -controller.getX(Hand.kRight)), driveTrain
       )
     );
 
@@ -102,20 +126,22 @@ public class RobotContainer {
         }
       }, intakeRollers));
 
-    new JoystickButton(controller, Button.kY.value)
+    new JoystickButton(controller, Button.kBumperRight.value)
       .whenPressed(new InstantCommand(() -> intakeRollers.setState(IntakeRollersStates.OUT), intakeRollers))
       .whenReleased(new InstantCommand(() -> intakeRollers.setState(IntakeRollersStates.OFF), intakeRollers));
 
     new JoystickButton(controller, Button.kX.value)
-      .whenPressed(new InstantCommand(() -> driveTrain.shift(), driveTrain));
+      .whenPressed(new SequentialCommandGroup(
+        new InstantCommand(() -> driveTrain.shift(), driveTrain),
+        new WaitCommand(0.5)));
 
-    new JoystickButton(controller, Button.kBumperRight.value)
+    new JoystickButton(controller, Button.kBumperLeft.value)
       .whileHeld(new RunCommand(() -> {
         indexer.spin(0.5);
         conveyor.spin(0.75);
       }, indexer, conveyor));
 
-    new JoystickButton(controller, Button.kBumperLeft.value)
+    new JoystickButton(controller, Button.kY.value)
       .whenPressed(new InstantCommand(() -> {
         if(flywheel.getState() == FlywheelStates.OFF || flywheel.getState() == FlywheelStates.LOWGOAL) {
           flywheel.setState(FlywheelStates.HIGHGOAL);
@@ -131,17 +157,21 @@ public class RobotContainer {
           flywheel.setState(FlywheelStates.OFF);
         }}, flywheel));
 
-    // new Trigger(() -> controller.getPOV() == 0)
-    //   .whileActiveContinuous(new RunCommand(() -> lift.winchUp(), lift));
+    new Trigger(() -> controller.getPOV() == 0)
+      .whileActiveContinuous(new RunCommand(() -> lift.winchUp(), lift));
 
     // new Trigger(() -> controller.getPOV() == 180)
     //   .whileActiveContinuous(new RunCommand(() -> lift.winchDown(), lift));
 
     new Trigger(() -> controller.getPOV() == 90)
-      .whileActiveContinuous(new RunCommand(() -> lift.toggle(), lift));
+      .whileActiveContinuous(new SequentialCommandGroup(
+        new InstantCommand(() -> lift.toggle(), lift),
+        new WaitCommand(0.5)));
 
     new Trigger(() -> controller.getPOV() == 270)
-      .whileActiveContinuous(new RunCommand(() -> intakeRollers.deploy(), intakeRollers));
+      .whileActiveContinuous(new SequentialCommandGroup(
+        new InstantCommand(() -> intakeRollers.deploy(), intakeRollers),
+        new WaitCommand(0.5)));
 }
 
 
@@ -151,6 +181,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return driveForwardHalfSec;
+    return auto;
   }
 }

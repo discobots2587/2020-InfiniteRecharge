@@ -23,6 +23,8 @@ public final class Constants {
         public static final int krightSlaveID = 13;
 
         public static final int kshifterChannel = 0;
+        
+        public static final int kmotorCurrentLimit = 35;
     }
 
     public static final class IntakeRollersConstants {

@@ -16,10 +16,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveTrainConstants;
 
 public class DriveTrain extends SubsystemBase {
-  private TalonSRX leftMaster = new TalonSRX(DriveTrainConstants.kleftMasterID);
-  private TalonSRX rightMaster = new TalonSRX(DriveTrainConstants.krightMasterID);
-  private TalonSRX leftSlave = new TalonSRX(DriveTrainConstants.kleftSlaveID);
-  private VictorSPX rightSlave = new VictorSPX(DriveTrainConstants.krightSlaveID);
+  private final TalonSRX leftMaster = new TalonSRX(DriveTrainConstants.kleftMasterID);
+  private final TalonSRX rightMaster = new TalonSRX(DriveTrainConstants.krightMasterID);
+  private final TalonSRX leftSlave = new TalonSRX(DriveTrainConstants.kleftSlaveID);
+  // private final VictorSPX rightSlave = new VictorSPX(DriveTrainConstants.krightSlaveID);
+  private final TalonSRX rightSlave = new TalonSRX(DriveTrainConstants.krightSlaveID);
 
   private final Solenoid shifter = new Solenoid(DriveTrainConstants.kshifterChannel);
 
@@ -27,9 +28,9 @@ public class DriveTrain extends SubsystemBase {
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
-    this.rightSlave.setInverted(true);
-    this.leftSlave.follow(this.leftMaster);
-    this.rightSlave.follow(this.rightMaster);
+    rightSlave.setInverted(true);
+    leftSlave.follow(leftMaster);
+    rightSlave.follow(rightMaster);
   }
 
   /**
@@ -38,8 +39,8 @@ public class DriveTrain extends SubsystemBase {
    * @param power the power to move forward at [-1, 1]
    */
   public void forward(double power) {
-    this.leftMaster.set(ControlMode.PercentOutput, power);
-    this.rightMaster.set(ControlMode.PercentOutput, power);
+    leftMaster.set(ControlMode.PercentOutput, power);
+    rightMaster.set(ControlMode.PercentOutput, power);
   }
 
   /**
@@ -48,8 +49,8 @@ public class DriveTrain extends SubsystemBase {
    * @param power the power to rotate at [-1, 1]
    */
   public void rotate(double power) {
-    this.leftMaster.set(ControlMode.PercentOutput, power);
-    this.rightMaster.set(ControlMode.PercentOutput, -power);
+    leftMaster.set(ControlMode.PercentOutput, power);
+    rightMaster.set(ControlMode.PercentOutput, -power);
   }
 
   /**
@@ -62,8 +63,8 @@ public class DriveTrain extends SubsystemBase {
     double leftPower = (forward + turn)*0.9;
     double rightPower = (forward - turn)*0.9;
 
-    this.leftMaster.set(ControlMode.PercentOutput, leftPower);
-    this.rightMaster.set(ControlMode.PercentOutput, rightPower);
+    leftMaster.set(ControlMode.PercentOutput, leftPower);
+    rightMaster.set(ControlMode.PercentOutput, rightPower);
   }
 
   /**
@@ -73,8 +74,8 @@ public class DriveTrain extends SubsystemBase {
    * @param rightPower the right side power [-1, 1]
    */
   public void tankDrive(double leftPower, double rightPower) {
-    this.leftMaster.set(ControlMode.PercentOutput, leftPower);
-    this.rightMaster.set(ControlMode.PercentOutput, rightPower);
+    leftMaster.set(ControlMode.PercentOutput, leftPower);
+    rightMaster.set(ControlMode.PercentOutput, rightPower);
   }
 
   public void shift() {

@@ -21,10 +21,38 @@ public final class Constants {
         public static final int krightMasterID = 11;
         public static final int kleftSlaveID = 12;
         public static final int krightSlaveID = 13;
-        public static final int kleftSlaveTEMPID = 14;
+
+        public static final int kshifterChannel = 0;
     }
 
     public static final class IntakeRollersConstants {
         public static final int kRollersID = 20;
+
+        public static final int kdeployChannel = 1;
+
+    }
+    
+    public static final class FlywheelConstants {
+        public static final int kleftFlywheelID = 30;
+        public static final int krightFlywheelID = 31;
+
+        public static final double klowGoalPower = 0.2;
+        public static final double khighGoalPower = 1.0;
+    }
+    
+    public static final class ConveyorConstants {
+        public static final int kConveyorID = 40;
+    }
+
+    public static final class IndexerConstants {
+        public static final int kindexerID = 50;
+    }
+
+    public static final class LiftConstants {
+        public static final int kwinchID = 60;
+        public static final double winchUpPower = 0.8;
+        public static final double winchDownPower = -0.2;
+
+        public static final int ksolenoidChannel = 2;
     }
 }

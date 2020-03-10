@@ -11,12 +11,20 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeRollersConstants;
 
 public class IntakeRollers extends SubsystemBase {
   private TalonSRX rollers = new TalonSRX(IntakeRollersConstants.kRollersID);
-  private TalonSRX conveyor = new TalonSRX(21);
+
+  private final Solenoid deploy = new Solenoid(IntakeRollersConstants.kdeployChannel);
+
+  public static enum IntakeRollersStates {
+    OFF, IN, OUT
+  }
+
+  private IntakeRollersStates state = IntakeRollersStates.OFF;
 
   /**
    * Creates a new IntakeRollers.
@@ -24,19 +32,15 @@ public class IntakeRollers extends SubsystemBase {
   public IntakeRollers() {
     rollers.setNeutralMode(NeutralMode.Brake);
     rollers.setInverted(true);
-
-    conveyor.setNeutralMode(NeutralMode.Brake);
-    conveyor.setInverted(true);
   }
 
   /**
    * Spins the rollers at a given power
    * 
-   * @param power the pwoer to spin the rollers at [-1, 1]. Negative values spin outwards.
+   * @param power the power to spin the rollers at [-1, 1]. Negative values spin outwards.
    */
-  public void spin(double rollerPower, double conveyorPower) {
-    rollers.set(ControlMode.PercentOutput, rollerPower);
-    conveyor.set(ControlMode.PercentOutput, conveyorPower);
+  public void spin(double power) {
+    rollers.set(ControlMode.PercentOutput, power);
   }
 
   /**
@@ -44,7 +48,18 @@ public class IntakeRollers extends SubsystemBase {
    */
   public void stop() {
     rollers.set(ControlMode.PercentOutput, 0);
-    conveyor.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void deploy() {
+    deploy.set(!deploy.get());
+  }
+
+  public void setState(IntakeRollersStates istate) {
+    state = istate;
+  }
+
+  public IntakeRollersStates getState() {
+    return state;
   }
 
   @Override
